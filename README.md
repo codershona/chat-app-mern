@@ -1,2 +1,8 @@
-# Chat App Mern
+# Chat App MERN
+
+#### Frontend
+
+#### Backend
+
+#### Production
 
