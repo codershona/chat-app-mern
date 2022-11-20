@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: 'Rubik Microbe', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #FFEFBA;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.Main {
+  text-align: center;
+}
+
+.chatForm {
+  padding: 25px;
+  /* position: fixed; */
+  /* bottom: 25px; */
+  z-index: 1;
+  background-color: #d7e2a6;
+  width: 96%;
+  margin-bottom: 0;
+  bottom: 0;
+  height: 18%;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 20px;
+  margin-left: 10px;
+  font-family: sans-serif; 
+}
+
+.postMessage {
+  padding: 15px;
+  margin: 15px;
+  width: auto;
+  min-width: min-content;
+	max-width: max-content;
+  /* display: inline-table; */
+  /* display: table; */
+}
+
+.postMessage_user {
+  text-align: right !important;
+  margin-left: auto;
+  color: rgba(20, 16, 81, 0.689);
+}
+
+.chatRoom_Card {
+  background-color: #d2998d !important;
+  width: 400px;
+  /* color: rgba(255, 255, 255, 0.934) !important; */
+}
+
+.chatRoom_guestCard {
+  background-color: #9eb977 !important;
+  width: 400px;
+}
+
