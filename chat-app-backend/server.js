@@ -13,7 +13,16 @@ const port = process.env.PORT || 9001;
 
 
 // Database Configuration
+const mongoURI = 'mongodb+srv://admin:335577@cluster0.fw1gdf8.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(mongoURI, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+mongoose.connection.once('open', () => {
+  console.log('DB Connected');
+})
 
+// mongodb+srv://admin:335577@cluster0.fw1gdf8.mongodb.net/?retryWrites=true&w=majority
 
 // Add API Routes
 app.get('/', (req, res) => res.status(200).send('Hello World'));
