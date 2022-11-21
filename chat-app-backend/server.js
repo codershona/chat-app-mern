@@ -54,7 +54,6 @@ app.post("/messages/new", (req, res) => {
           res.status(500).send(err);
           console.log(err)
       } else {
-          // res.status(201).send(`new messages created: \n ${data}`)
           res.status(201).send(data);
       }
   });
