@@ -6,27 +6,24 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import Chats from './Chats';
 import FlipMove from 'react-flip-move';
+import Pusher from 'pusher-js';
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import axios from './axios';
 
 // import database from './firebase';
 // import firebase from 'firebase';
 
+const pusher = new Pusher('60c2df1349566443c4e7', {
+  cluster: 'eu'
+});
+
 const Main = () => {
   const [inputField, setInputField] = useState('');
   const [postMessages, setPostMesssages] = useState([]);
   const [userAccount, setUserAccount] = useState('');
 
-
   console.log(inputField);
   console.log(postMessages);
-
-  // useEffect(() => {
-  //   // our logic will compile one time when our application components would load
-  //   database.collection('postsMessages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-  //     setPostMesssages(snapshot.docs.map(doc => ({ id: doc.id, postsMessage: doc.data() })))
-  //   })
-  // }, [])
 
   const sync = async () => {
     await axios.get('/messages/sync')
@@ -39,6 +36,13 @@ const Main = () => {
   useEffect(() => {
     sync();
   }, [])
+
+  useEffect(() => {
+    const channel = pusher.subscribe('postMessages');
+    channel.bind('newMessage', function (data) {
+      sync()
+    })
+  }, [userAccount]);
  
 
 
@@ -50,11 +54,6 @@ const Main = () => {
   const dropMsg = (e) => {
     // all the logic to send a message goes
     e.preventDefault();
-    // database.collection('postsMessages').add({
-    //   postsMessage: inputField,
-    //   userAccount: userAccount,
-    //   timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    // })
     axios.post('/messages/new', {
       userAccount: userAccount,
       postMessage: inputField,
@@ -93,13 +92,11 @@ const Main = () => {
 
       <FlipMove>
       {
-        // postsMessages.map(({id, postsMessage}) => (
           postMessages.map(postMessage => (
           <div className="postField">
             <Chats 
             userAccount={userAccount} 
             postMessage={postMessage}
-            // key={id}
             key={postMessage._id}
             />
           </div>
