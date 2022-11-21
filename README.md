@@ -16,9 +16,12 @@
 ⌨️ App Configuration
 ⌨️ Create Middlewares
 ⌨️ Database Configuration
+⌨️ Create the Database models
 ⌨️ Add API Routes
 ⌨️ Create listening ports
 ⌨️ Technologies: Express, Mongoose, MongoDB, Pusher, Cors
 
 #### Production
 
+⌨️
+⌨️

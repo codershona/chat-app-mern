@@ -16,7 +16,7 @@ const Chats = forwardRef(({ postMessage, userAccount }, ref) => {
              color="text.secondary" 
              className="chat_text"
              gutterBottom>
-              {!isUserAccount && `${postMessage.userAccount || 'Anonymous User'}: speaks to `}: {postMessage.postsMessage}
+              {!isUserAccount && `${postMessage.userAccount || 'Anonymous User'}: speaks to `} {postMessage.postMessage}
             </Typography>
           </CardContent>
        </Card>

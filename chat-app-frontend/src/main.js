@@ -6,26 +6,43 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import Chats from './Chats';
 import FlipMove from 'react-flip-move';
+import Pusher from 'pusher-js';
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
-import database from './firebase';
-import firebase from 'firebase'
+import axios from './axios';
+
+// import database from './firebase';
+// import firebase from 'firebase';
+
+const pusher = new Pusher('60c2df1349566443c4e7', {
+  cluster: 'eu'
+});
 
 const Main = () => {
   const [inputField, setInputField] = useState('');
-  const [postsMessages, setPostMesssages] = useState([]);
+  const [postMessages, setPostMesssages] = useState([]);
   const [userAccount, setUserAccount] = useState('');
 
-
   console.log(inputField);
-  console.log(postsMessages);
+  console.log(postMessages);
+
+  const sync = async () => {
+    await axios.get('/messages/sync')
+    .then((res) => {
+      console.log(res.data);
+      setPostMesssages(res.data);
+    })
+  }
 
   useEffect(() => {
-    // our logic will compile one time when our application components would load
-    database.collection('postsMessages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setPostMesssages(snapshot.docs.map(doc => ({ id: doc.id, postsMessage: doc.data() })))
-    })
+    sync();
   }, [])
 
+  useEffect(() => {
+    const channel = pusher.subscribe('postMessages');
+    channel.bind('newMessage', function (data) {
+      sync()
+    })
+  }, [userAccount]);
  
 
 
@@ -37,11 +54,13 @@ const Main = () => {
   const dropMsg = (e) => {
     // all the logic to send a message goes
     e.preventDefault();
-    database.collection('postsMessages').add({
-      postsMessage: inputField,
+    axios.post('/messages/new', {
       userAccount: userAccount,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      postMessage: inputField,
+      timestamp: Date.now()
     })
+
+
     setInputField('');
   }
 
@@ -73,12 +92,12 @@ const Main = () => {
 
       <FlipMove>
       {
-        postsMessages.map(({id, postsMessage}) => (
+          postMessages.map(postMessage => (
           <div className="postField">
             <Chats 
             userAccount={userAccount} 
-            postMessage={postsMessage}
-            key={id}
+            postMessage={postMessage}
+            key={postMessage._id}
             />
           </div>
         ))
