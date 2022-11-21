@@ -4,9 +4,18 @@ import cors from 'cors';
 //  Import Dependencies
 import express from 'express';
 import mongoose from 'mongoose';
+
 // App Configuration
 const app = express();
 const port = process.env.PORT || 9000;
+
+const pusher = new Pusher({
+  appId: "1511490",
+  key: "60c2df1349566443c4e7",
+  secret: "85450f0cdcc7bb69b85b",
+  cluster: "eu",
+  useTLS: true
+});
 
 
 // Create Middlewares
@@ -24,6 +33,14 @@ mongoose.connect(mongoURI, { // MongoClient.connect(mongoURI, {})
 });
 mongoose.connection.once('open', () => {
   console.log('DB Connected');
+
+  const changeStream = mongoose.connection.collection('messagecontents').watch();
+  changeStream.on('change', (change) => {
+    pusher.trigger('postMessages', 'newMessage', {
+      'change': change
+    })
+
+  })
 });
 
 // Add API Routes
@@ -49,6 +66,9 @@ app.get("/messages/sync", (req, res) => {
           res.status(500).send(err);
           console.log(err)
       } else {
+        data.sort((b, a) => {
+          return a.timestamp - b.timestamp;
+        });
           res.status(200).send(data);
       }
     });
