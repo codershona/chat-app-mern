@@ -2,9 +2,9 @@
 import mongoose from 'mongoose';
 
 const chatSchema = mongoose.Schema({
-  username: String,
-  message: String, 
+  userAccount: String,
+  postMessage: String, 
   timestamp: String, 
 });
 
-export default mongoose.model('messages', chatSchema);
+export default mongoose.model('messagecontents', chatSchema);
