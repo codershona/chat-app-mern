@@ -43,5 +43,16 @@ app.post("/messages/new", (req, res) => {
   });
 });
 
+app.get("/messages/sync", (req, res) => {
+  Messages.find((err, data) => {
+        if (err) {
+          res.status(500).send(err);
+          console.log(err)
+      } else {
+          res.status(200).send(data);
+      }
+    });
+});
+
 // Create listening ports
 app.listen(port, () => console.log(`Listening on localhost: ${port}`));

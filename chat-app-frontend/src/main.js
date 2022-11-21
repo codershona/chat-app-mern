@@ -7,25 +7,38 @@ import { Button } from '@mui/material';
 import Chats from './Chats';
 import FlipMove from 'react-flip-move';
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
-import database from './firebase';
-import firebase from 'firebase'
+import axios from './axios';
+
+// import database from './firebase';
+// import firebase from 'firebase';
 
 const Main = () => {
   const [inputField, setInputField] = useState('');
-  const [postsMessages, setPostMesssages] = useState([]);
+  const [postMessages, setPostMesssages] = useState([]);
   const [userAccount, setUserAccount] = useState('');
 
 
   console.log(inputField);
-  console.log(postsMessages);
+  console.log(postMessages);
+
+  // useEffect(() => {
+  //   // our logic will compile one time when our application components would load
+  //   database.collection('postsMessages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+  //     setPostMesssages(snapshot.docs.map(doc => ({ id: doc.id, postsMessage: doc.data() })))
+  //   })
+  // }, [])
+
+  const sync = async () => {
+    await axios.get('/messages/sync')
+    .then((res) => {
+      console.log(res.data);
+      setPostMesssages(res.data);
+    })
+  }
 
   useEffect(() => {
-    // our logic will compile one time when our application components would load
-    database.collection('postsMessages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setPostMesssages(snapshot.docs.map(doc => ({ id: doc.id, postsMessage: doc.data() })))
-    })
+    sync();
   }, [])
-
  
 
 
@@ -37,11 +50,18 @@ const Main = () => {
   const dropMsg = (e) => {
     // all the logic to send a message goes
     e.preventDefault();
-    database.collection('postsMessages').add({
-      postsMessage: inputField,
+    // database.collection('postsMessages').add({
+    //   postsMessage: inputField,
+    //   userAccount: userAccount,
+    //   timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    // })
+    axios.post('/messages/new', {
       userAccount: userAccount,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      postMessage: inputField,
+      timestamp: Date.now()
     })
+
+
     setInputField('');
   }
 
@@ -73,12 +93,14 @@ const Main = () => {
 
       <FlipMove>
       {
-        postsMessages.map(({id, postsMessage}) => (
+        // postsMessages.map(({id, postsMessage}) => (
+          postMessages.map(postMessage => (
           <div className="postField">
             <Chats 
             userAccount={userAccount} 
-            postMessage={postsMessage}
-            key={id}
+            postMessage={postMessage}
+            // key={id}
+            key={postMessage._id}
             />
           </div>
         ))
