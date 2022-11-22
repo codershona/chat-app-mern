@@ -23,5 +23,6 @@
 
 #### Production
 
-⌨️
-⌨️
+⌨️ Frontend Deployment : ```https://chat-app-f-1105c.web.app/```
+⌨️ Backend Deployment: ```https://mechat-app-mern.herokuapp.com/```
+
