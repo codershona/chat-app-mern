@@ -3,7 +3,9 @@
 #### Frontend:
 
 ⌨️ Structuring Project
+
 ⌨️ Create app on Firebase
+
 ⌨️ Create input field
 ⌨️ Add firebase hosting to your app
 ⌨️ Add ability to send message
@@ -14,7 +16,7 @@
 
 ⌨️ Import Dependencies
 ⌨️ App Configuration
-⌨️ Create Middlewares
+⌨️ Create Middleware
 ⌨️ Database Configuration
 ⌨️ Create the Database models
 ⌨️ Add API Routes
