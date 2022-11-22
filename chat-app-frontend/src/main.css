@@ -1,16 +1,24 @@
 body {
   margin: 0;
-  font-family: 'Rubik Microbe', cursive;
+  font-family: "Rubik Microbe", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #FFEFBA;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #ffefba; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #ffefba
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ffefba
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   width: 100%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -32,7 +40,7 @@ code {
   padding-left: 25px;
   margin-right: 20px;
   margin-left: 10px;
-  font-family: sans-serif; 
+  font-family: sans-serif;
 }
 
 .postMessage {
@@ -40,7 +48,7 @@ code {
   margin: 15px;
   width: auto;
   min-width: min-content;
-	max-width: max-content;
+  max-width: max-content;
   /* display: inline-table; */
   /* display: table; */
 }
@@ -61,4 +69,3 @@ code {
   background-color: #9eb977 !important;
   width: 400px;
 }
-

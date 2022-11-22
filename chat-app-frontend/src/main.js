@@ -1,110 +1,126 @@
-import './main.css';
+import "./main.css";
 
-import { FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
-import { Button } from '@mui/material';
-import Chats from './Chats';
-import FlipMove from 'react-flip-move';
-import Pusher from 'pusher-js';
-import SendToMobileIcon from '@mui/icons-material/SendToMobile';
-import axios from './axios';
+import { Button } from "@mui/material";
+import Chats from "./Chats";
+import FlipMove from "react-flip-move";
+import Pusher from "pusher-js";
+import SendToMobileIcon from "@mui/icons-material/SendToMobile";
+import axios from "./axios";
 
 // import database from './firebase';
 // import firebase from 'firebase';
 
-const pusher = new Pusher('60c2df1349566443c4e7', {
-  cluster: 'eu'
+const pusher = new Pusher("60c2df1349566443c4e7", {
+  cluster: "eu",
 });
 
 const Main = () => {
-  const [inputField, setInputField] = useState('');
+  const [inputField, setInputField] = useState("");
   const [postMessages, setPostMesssages] = useState([]);
-  const [userAccount, setUserAccount] = useState('');
+  const [userAccount, setUserAccount] = useState("");
 
   console.log(inputField);
   console.log(postMessages);
 
   const sync = async () => {
-    await axios.get('/messages/sync')
-    .then((res) => {
+    await axios.get("/messages/sync").then((res) => {
       console.log(res.data);
       setPostMesssages(res.data);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     sync();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const channel = pusher.subscribe('postMessages');
-    channel.bind('newMessage', function (data) {
-      sync()
-    })
+    const channel = pusher.subscribe("postMessages");
+    channel.bind("newMessage", function (data) {
+      sync();
+    });
   }, [userAccount]);
- 
-
 
   useEffect(() => {
     // our logic will compile one time when our application components would load
-    setUserAccount(prompt('May I know your good name, Please?'))
-  }, [])
+    setUserAccount(prompt("May I know your good name, Please?"));
+  }, []);
 
   const dropMsg = (e) => {
     // all the logic to send a message goes
     e.preventDefault();
-    axios.post('/messages/new', {
+    axios.post("/messages/new", {
       userAccount: userAccount,
       postMessage: inputField,
-      timestamp: Date.now()
-    })
+      timestamp: Date.now(),
+    });
 
-
-    setInputField('');
-  }
+    setInputField("");
+  };
 
   return (
     <div className="Main">
       {/* <img src="https://facebookbrand.com/wp-content/uploads/2018/09/Header-e1538151782912.png?w=100&h=100" alt="chat logo" /> */}
-      <img src="https://cdn-icons-png.flaticon.com/512/2950/2950701.png" alt="chat logo" width="85" height="80" />
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2950/2950701.png"
+        alt="chat logo"
+        width="85"
+        height="80"
+      />
       <h1>MEChat World</h1>
-       <h2>Welcome to {userAccount} into our chatroom</h2>
+      <h2>Welcome to {userAccount} into our chatroom</h2>
       <div className="chatForm">
         <FormControl className="form_control">
-          <InputLabel variant="contained" color="secondary" htmlFor="my-input">Please Drop Your Messages...🙂</InputLabel>
-          <Input className="form_input" label="Filled success" variant="filled" color="success" id="my-input" aria-describedby="my-helper-text" value={inputField} onChange={e => setInputField(e.target.value)} />
-          <FormHelperText id="my-helper-text" variant="contained" color="secondary">We wil keep your chats private...🔒</FormHelperText>
-          <br/>
-            <Button 
-              variant="contained" 
-              color="secondary" 
-              type='submit' 
-              onClick={dropMsg} 
-              disabled={!inputField}
-              className='form_iconButton'
-              >
-                Drop a message
-                <SendToMobileIcon />
-            </Button>
+          <InputLabel variant="contained" color="secondary" htmlFor="my-input">
+            Please Drop Your Messages...🙂
+          </InputLabel>
+          <Input
+            className="form_input"
+            label="Filled success"
+            variant="filled"
+            color="success"
+            id="my-input"
+            aria-describedby="my-helper-text"
+            value={inputField}
+            onChange={(e) => setInputField(e.target.value)}
+          />
+          <FormHelperText
+            id="my-helper-text"
+            variant="contained"
+            color="secondary"
+          >
+            We wil keep your chats private...🔒
+          </FormHelperText>
+          <br />
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            onClick={dropMsg}
+            disabled={!inputField}
+            className="form_iconButton"
+          >
+            Drop a message
+            <SendToMobileIcon />
+          </Button>
         </FormControl>
       </div>
 
       <FlipMove>
-      {
-          postMessages.map(postMessage => (
+        {postMessages.map((postMessage) => (
           <div className="postField">
-            <Chats 
-            userAccount={userAccount} 
-            postMessage={postMessage}
-            key={postMessage._id}
+            <Chats
+              userAccount={userAccount}
+              postMessage={postMessage}
+              key={postMessage._id}
             />
           </div>
-        ))
-      }
+        ))}
       </FlipMove>
     </div>
   );
-}
+};
 
 export default Main;
