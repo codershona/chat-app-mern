@@ -20,6 +20,10 @@
 - Chatting is real-time.
 - User can send messages and receive messages by providing user Account name.
 - User can receive users reply's messages every time when a message is sent.
+
+## Frontend and UI:
+
+<img width="956" alt="Screenshot 2022-11-22 at 12 48 55 PM" src="https://user-images.githubusercontent.com/57604500/203318077-5a039d68-1b26-4fe5-a2e4-31ba64a550cc.png">
 ## Frontend:
 
 ⌨️ Structuring Project
