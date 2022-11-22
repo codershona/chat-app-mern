@@ -23,7 +23,8 @@
 
 ## Frontend and UI:
 
-<img width="956" alt="Screenshot 2022-11-22 at 12 48 55 PM" src="https://user-images.githubusercontent.com/57604500/203318077-5a039d68-1b26-4fe5-a2e4-31ba64a550cc.png">
+<img width="956" alt="Screenshot 2022-11-22 at 12 51 57 PM" src="https://user-images.githubusercontent.com/57604500/203318640-1d77ad5f-3c7c-4ebb-936f-72d78f11806c.png">
+
 ## Frontend:
 
 ⌨️ Structuring Project
