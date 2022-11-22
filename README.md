@@ -1,10 +1,7 @@
 # Project: Chat App MERN
-
-## GIFs
+## GIFs for demo:
 
 ![Screen-Recording-2022-11-22-at-1](https://user-images.githubusercontent.com/57604500/203317097-b3c9fced-815f-4452-bff7-0dbae1410e65.gif)
-
-
 
 #### Project Can be found in here :  **[Live version](https://chat-app-f-1105c.web.app/)**
  <br>
